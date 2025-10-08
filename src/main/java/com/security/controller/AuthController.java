@@ -64,13 +64,10 @@ public class AuthController {
             return ResponseEntity.ok()
                     .header("HX-Redirect", "/dashboard")
                     .build();
-        } catch (AuthenticationException ex) {
+        } catch (Exception ex) {
             log.info("Error while login", ex);
-            return ResponseEntity.status(401)
-                    .body(Map.of(
-                            "success", false,
-                            "message", "Invalid username or password"
-                    ));
+            return ResponseEntity.ok().header("HX-Retarget", "#error-message")
+                    .body("Invalid username or password");
         }
     }
 }
